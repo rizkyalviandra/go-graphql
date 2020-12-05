@@ -1,4 +1,4 @@
-module go-graphql
+module github.com/rizkyalviandra/go-graphql
 
 go 1.15
 
