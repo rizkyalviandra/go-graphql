@@ -6,7 +6,7 @@ import (
 	"bytes"
 	"context"
 	"errors"
-	"go-graphql/graph/model"
+	"github.com/rizkyalviandra/go-graphql/graph/model"
 	"strconv"
 	"sync"
 	"sync/atomic"

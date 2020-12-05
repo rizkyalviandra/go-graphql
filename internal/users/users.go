@@ -2,7 +2,7 @@ package users
 
 import (
 	"database/sql"
-	"go-graphql/internal/pkg/db/mysql"
+	"github.com/rizkyalviandra/go-graphql/internal/pkg/db/mysql"
 	"golang.org/x/crypto/bcrypt"
 
 	"log"
@@ -15,7 +15,8 @@ type User struct {
 	Password string `json:"password"`
 }
 
-func (user *User) create() {
+// Create user Function
+func (user *User) Create() {
 	statement, err := database.Db.Prepare("INSERT INTO Users(Username,Password) VALUES(?,?)")
 	print(statement)
 	if err != nil {
@@ -57,4 +58,25 @@ func GetUserIdByUsername(username string) (int, error) {
 		return 0, err
 	}
 	return Id, nil
+}
+
+// Authenticate Function to check password
+func (user *User) Authenticate() bool {
+	statement, err := database.Db.Prepare("select Password from Users WHERE Username = ?")
+	if err != nil {
+		log.Fatal(err)
+	}
+	row := statement.QueryRow(user.Username)
+
+	var hashedPassword string
+	err = row.Scan(&hashedPassword)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return false
+		} else {
+			log.Fatal(err)
+		}
+	}
+
+	return CheckPasswordHash(user.Password, hashedPassword)
 }

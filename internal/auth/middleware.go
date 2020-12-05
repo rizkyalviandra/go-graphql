@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"go-graphql/internal/users"
-	"go-graphql/pkg/jwt"
+	"github.com/rizkyalviandra/go-graphql/internal/users"
+	"github.com/rizkyalviandra/go-graphql/pkg/jwt"
 )
 
 var userCtxKey = &contextKey{"user"}
